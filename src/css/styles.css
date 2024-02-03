@@ -23,3 +23,58 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+.search-form {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+input {
+  border-radius: 4px;
+  width: 272px;
+  height: 40px;
+  background-color: #fff;
+  border: 1px solid #808080;
+  font-family: 'Montserrat';
+  font-weight:400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  padding-left: 16px;
+}
+
+input::placeholder {
+  font-family: 'Montserrat';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #808080;
+}
+
+input:hover {
+  border: 1px solid #000;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #4e75ff;
+}
+button {
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 91px;
+  height: 40px;
+  background-color: #4e75ff;
+  border: none;
+  font-family: 'Montserrat';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+button:hover {
+  background-color: #6c8cff;
+}
