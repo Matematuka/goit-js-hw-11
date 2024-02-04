@@ -27,6 +27,7 @@
   display: flex;
   gap: 8px;
   justify-content: center;
+  margin-bottom: 32px;
 }
 
 input {
@@ -77,4 +78,44 @@ button {
 
 button:hover {
   background-color: #6c8cff;
+}
+
+.gallery {
+  display: flex;
+  width: 1440px;
+  /* padding: 0 156px; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+  background: #FFF;
+}
+
+.gallery-image {
+  display: block;
+  width: 360px;
+  height: 200px;
+}
+
+.gallery-item {
+  border: 1px solid #808080;
+}
+
+.description {
+  display: flex;
+  justify-content: space-around;
+}
+
+p {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Montserrat';
+  font-weight: 700;
+}
+
+span {
+  font-family: 'Montserrat';
+  font-weight: 400;
+  text-align: center;
 }

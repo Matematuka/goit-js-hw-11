@@ -4,7 +4,8 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector('.search-form');
-
+const searchBtn = document.querySelector('button');
+const pictures = document.querySelector('.gallery');
 
 form.addEventListener('submit', searchImage);
 function searchImage(evt) {
@@ -15,8 +16,11 @@ function searchImage(evt) {
     } else {
         getImage(image).then(data => {
             if (data.totalHits > 0) {
-                console.log(data);
+    const markup = data.hits.map(imageTemplate).join('\n\n');
+                pictures.innerHTML = markup;
+                
             } else {
+        pictures.innerHTML = "";
         iziToast.show({
     title: 'Error',
     message: 'There are no images matching your search query. Please try again!',   
@@ -26,9 +30,9 @@ function searchImage(evt) {
     messageLineHeight: '150%',
     backgroundColor: '#ef4040',
     position: 'bottomRight'
-});
-        }
-    });
+        });              
+            }       
+        });     
 }
     evt.target.reset();   
 }
@@ -40,10 +44,18 @@ function getImage(imageName) {
     return fetch(url).then(res => res.json());
 }
 
-function imageTemplate () {
-    return ` <a href="images/image1.jpg"><img src="images/thumbs/thumb1.jpg" alt="" title="" /></a>
-    <a href="images/image2.jpg"><img src="images/thumbs/thumb2.jpg" alt="" title="Beautiful Image" /></a>`;
+function imageTemplate ({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) {
+    return `<li class="gallery-item"><a href="${webformatURL}"><img class="gallery-image" src="${largeImageURL}" data-source = ${largeImageURL} alt="${tags}" /></a>
+<div class="description"> <p>Likes <span>${likes}</span></p><p>Views <span>${views}</span></p><p>Comments <span>${comments}</span></p><p>Downloads <span>${downloads}</span></p></div></li>`;
 }
 
-// function renderImages{}
+function renderImages(hits) {
+const pictures = document.querySelector('.gallery');
+const markup = hits.map(imageTemplate).join('\n\n');
+pictures.innerHTML = markup;
+}
 
+const gallery = new SimpleLightbox('.gallery-item a');
+gallery.on('show.simplelightbox',  {
+	nav: 'true',
+});
