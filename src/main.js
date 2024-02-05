@@ -4,9 +4,7 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector('.search-form');
-const searchBtn = document.querySelector('button');
 const pictures = document.querySelector('.gallery');
-const spanLoader = document.querySelector('.loader');
 
 form.addEventListener('submit', searchImage);
 function searchImage(evt) {
