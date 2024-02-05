@@ -54,7 +54,7 @@ function getImage(imageName) {
     const BASE_URL = 'https://pixabay.com/api';
     const PARAMS = `?key=42174217-6daf07c41ac875e98ae2151fa&q=${imageName}&image_type=photo$orientation=horizontal&safesearch=true`;
     const url = BASE_URL + PARAMS;
-    return fetch(url).then(res => res.json()).catch();
+    return fetch(url).then(res => res.json());
 }
 
 function imageTemplate({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) {
