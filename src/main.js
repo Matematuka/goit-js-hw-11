@@ -13,7 +13,7 @@ function searchImage(evt) {
     evt.preventDefault();
     const image = evt.target.elements.image.value.trim();
     if (image === '') {
-         iziToast.show({
+        iziToast.show({
     title: 'Error',
     message: 'Please enter a search term to begin your search.',   
     titleSize: '16px',
@@ -23,16 +23,14 @@ function searchImage(evt) {
     backgroundColor: '#ef4040',
     position: 'bottomRight'
          }); 
-        return;
-        
+        return; 
     } else {
         pictures.innerHTML = '<span class="loader"></span>';
         getImage(image).then(data => {
             if (data.totalHits > 0) {
     const markup = data.hits.map(imageTemplate).join('\n\n');
                 pictures.innerHTML = markup;
-                gallery.refresh();
-                
+                gallery.refresh();           
             } else {
         pictures.innerHTML = "";
         iziToast.show({
@@ -45,7 +43,7 @@ function searchImage(evt) {
     backgroundColor: '#ef4040',
     position: 'bottomRight'
         });              
-            }       
+        }       
         });     
 }
     evt.target.reset();   
