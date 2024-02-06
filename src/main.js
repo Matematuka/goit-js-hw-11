@@ -5,7 +5,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector('.search-form');
 const pictures = document.querySelector('.gallery');
-const spanLoader = document.querySelector('.loader');
+
 
 form.addEventListener('submit', searchImage);
 function searchImage(evt) {
@@ -37,9 +37,9 @@ function onFulfield(data) {
         gallery.refresh();
     }
 }
-    function onRejected(data) {
-         pictures.innerHTML = "";
-        iziToast.show({
+function onRejected(data) {
+    pictures.innerHTML = "";
+    iziToast.show({
     title: 'Error',
     message: 'There are no images matching your search query. Please try again!',   
     titleSize: '16px',
@@ -52,8 +52,9 @@ function onFulfield(data) {
 }   
         
 function hideLoader() {
+    const spanLoader = document.querySelector('.loader');
     setTimeout(() => {
-    spanLoader.style.display = 'none';
+    spanLoader.style.display = "none";
   }, 500);
 }
 
@@ -61,8 +62,13 @@ function getImage(imageName) {
     const BASE_URL = 'https://pixabay.com/api';
     const PARAMS = `?key=42174217-6daf07c41ac875e98ae2151fa&q=${imageName}&image_type=photo&orientation=horizontal&safesearch=true`;
     const url = BASE_URL + PARAMS;
-    return fetch(url).then(res => res.json());
-}
+    return fetch(url).then(response => {
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
+        return response.json();
+    });
+ 
 
 function imageTemplate ({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) {
     return `<li class="gallery-item"><a href="${largeImageURL}"><img class="gallery-image" src="${webformatURL}" alt="${tags}" /></a>
