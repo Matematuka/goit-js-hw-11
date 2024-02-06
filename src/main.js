@@ -10,8 +10,8 @@ const spanLoader = document.querySelector('.loader');
 form.addEventListener('submit', searchImage);
 function searchImage(evt) {
     evt.preventDefault();
-     pictures.innerHTML = '<span class="loader"></span>';
     const image = evt.target.elements.image.value.trim();
+    pictures.innerHTML = '<span class="loader"></span>';
     if (image === '') {
         iziToast.show({
             title: 'Error',
@@ -43,20 +43,16 @@ function searchImage(evt) {
                     position: 'bottomRight'
                 });
             }
-        }).finally(hideLoader());
+        }); 
     }
-    evt.target.reset();   
+    evt.target.reset(); 
 }
-        
-function hideLoader() {
-  if (spanLoader) {
-    spanLoader.remove();
-  }
-}
+
 function getImage(imageName) {
     const BASE_URL = 'https://pixabay.com/api/';
     const PARAMS = `?key=42174217-6daf07c41ac875e98ae2151fa&q=${imageName}&image_type=photo&orientation=horizontal&safesearch=true`;
     const url = BASE_URL + PARAMS;
+    
     return fetch(url).then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
