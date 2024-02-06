@@ -43,8 +43,6 @@ function searchImage(evt) {
                     position: 'bottomRight'
                 });
             }
-        }).catch(error => {
-            console.error('Error fetching data:', error)
         }).finally(hideLoader());
     }
     evt.target.reset();   
@@ -67,7 +65,6 @@ function getImage(imageName) {
     })
     
 }
-
 
 function imageTemplate ({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) {
     return `<li class="gallery-item"><a href="${largeImageURL}"><img class="gallery-image" src="${webformatURL}" alt="${tags}" /></a>
