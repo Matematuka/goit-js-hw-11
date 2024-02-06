@@ -14,6 +14,7 @@ function searchImage(evt) {
     pictures.innerHTML = '<span class="loader"></span>';
     const spanLoader = document.querySelector('.loader');
     if (image === '') {
+        setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
         iziToast.show({
             title: 'Error',
             message: 'Please enter a search term to begin your search.',
@@ -24,8 +25,6 @@ function searchImage(evt) {
             backgroundColor: '#ef4040',
             position: 'bottomRight'
         });
-        setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
-         
         return;
     } else {
         getImage(image).then(data => {
@@ -33,7 +32,7 @@ function searchImage(evt) {
                 const markup = data.hits.map(imageTemplate).join('\n\n');
                 pictures.innerHTML = markup;
                 gallery.refresh();
-               setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
+            setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
             } else {
                 pictures.innerHTML = "";
                 iziToast.show({
