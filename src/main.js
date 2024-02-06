@@ -9,12 +9,11 @@ const pictures = document.querySelector('.gallery');
 
 form.addEventListener('submit', searchImage);
 function searchImage(evt) {
+    const spanLoader = document.querySelector('.loader');
+    pictures.innerHTML = '<span class="loader"></span>';
     evt.preventDefault();
     const image = evt.target.elements.image.value.trim();
-    pictures.innerHTML = '<span class="loader"></span>';
-    const spanLoader = document.querySelector('.loader');
     if (image === '') {
-        setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
         iziToast.show({
             title: 'Error',
             message: 'Please enter a search term to begin your search.',
@@ -23,7 +22,7 @@ function searchImage(evt) {
             messageSize: '16px',
             messageLineHeight: '150%',
             backgroundColor: '#ef4040',
-            position: 'bottomRight'
+            position: 'bottomRight',
         });
         return;
     } else {
@@ -32,7 +31,6 @@ function searchImage(evt) {
                 const markup = data.hits.map(imageTemplate).join('\n\n');
                 pictures.innerHTML = markup;
                 gallery.refresh();
-            setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
             } else {
                 pictures.innerHTML = "";
                 iziToast.show({
@@ -43,9 +41,19 @@ function searchImage(evt) {
                     messageSize: '16px',
                     messageLineHeight: '150%',
                     backgroundColor: '#ef4040',
-                    position: 'bottomRight'
-                });
-                setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
+                    position: 'bottomRight',
+                }).catch((error) => {
+                    iziToast.show({
+                        title: 'Error',
+                        titleColor: '#ffffff',
+                        message: `${error}`,
+                        messageColor: '#ffffff',
+                        messageSize: '16px',
+                        backgroundColor: '#ef4040',
+                        iconUrl: errorIcon,
+                        position: 'bottomRight',
+                    });
+                }).finally(spanLoader.style.display = "none");
             }
         }); 
     }
@@ -59,10 +67,10 @@ function getImage(imageName) {
     
     return fetch(url).then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(response.status);
         }
         return response.json();
-    })
+    });
     
 }
 
