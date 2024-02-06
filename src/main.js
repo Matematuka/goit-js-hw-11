@@ -5,13 +5,14 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector('.search-form');
 const pictures = document.querySelector('.gallery');
-const spanLoader = document.querySelector('.loader');
+
 
 form.addEventListener('submit', searchImage);
 function searchImage(evt) {
     evt.preventDefault();
     const image = evt.target.elements.image.value.trim();
     pictures.innerHTML = '<span class="loader"></span>';
+    const spanLoader = document.querySelector('.loader');
     if (image === '') {
         iziToast.show({
             title: 'Error',
@@ -23,6 +24,8 @@ function searchImage(evt) {
             backgroundColor: '#ef4040',
             position: 'bottomRight'
         });
+        setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
+         
         return;
     } else {
         getImage(image).then(data => {
@@ -30,6 +33,7 @@ function searchImage(evt) {
                 const markup = data.hits.map(imageTemplate).join('\n\n');
                 pictures.innerHTML = markup;
                 gallery.refresh();
+               setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
             } else {
                 pictures.innerHTML = "";
                 iziToast.show({
@@ -42,6 +46,7 @@ function searchImage(evt) {
                     backgroundColor: '#ef4040',
                     position: 'bottomRight'
                 });
+                setTimeout(() => { spanLoader.style.display = "none"; }, 1000);
             }
         }); 
     }
