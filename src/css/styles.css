@@ -123,20 +123,40 @@ span {
 .loader {
   width: 48px;
   height: 48px;
-  border: 5px solid #FFF;
-  border-bottom-color: #FF3D00;
   border-radius: 50%;
-  display: inline-block;
+  display: block;
+  margin: 15px auto;
+  position: relative;
   box-sizing: border-box;
-  animation: rotation 1s linear infinite;
+  animation: zeroRotation 1s linear infinite alternate;
 }
 
-@keyframes rotation {
+.loader::after,
+.loader::before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #43951c;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, 50%);
+  border-radius: 50%;
+}
+
+.loader::before {
+  left: auto;
+  right: 0;
+  transform: translate(50%, 100%);
+}
+
+@keyframes zeroRotation {
   0% {
-    transform: rotate(0deg);
+    transform: scale(1) rotate(0deg);
   }
 
   100% {
-    transform: rotate(360deg);
+    transform: scale(0) rotate(360deg);
   }
-}
+} 

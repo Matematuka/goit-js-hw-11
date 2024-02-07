@@ -13,6 +13,7 @@ function searchImage(evt) {
     evt.preventDefault();
     const image = evt.target.elements.image.value.trim();
     if (image === '') {
+        pictures.innerHTML = "";
         iziToast.show({
             title: 'Error',
             message: 'Please enter a search term to begin your search.',
@@ -76,6 +77,7 @@ const gallery = new SimpleLightbox('.gallery a', {
 
 function showLoader() {
     spanLoader.style.display = 'block';
+    
 }
 
 function hideLoader() {
