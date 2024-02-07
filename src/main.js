@@ -75,7 +75,7 @@ const gallery = new SimpleLightbox('.gallery a', {
 });
 
 function showLoader() {
-    spanLoader.style.display = 'inline-block';
+    spanLoader.style.display = 'block';
 }
 
 function hideLoader() {
