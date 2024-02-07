@@ -5,12 +5,11 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector('.search-form');
 const pictures = document.querySelector('.gallery');
+const spanLoader = document.querySelector('.loader');
 
-
+hideLoader();
 form.addEventListener('submit', searchImage);
 function searchImage(evt) {
-    const spanLoader = document.querySelector('.loader');
-    pictures.innerHTML = '<span class="loader"></span>';
     evt.preventDefault();
     const image = evt.target.elements.image.value.trim();
     if (image === '') {
@@ -26,6 +25,7 @@ function searchImage(evt) {
         });
         return;
     } else {
+        showLoader();
         getImage(image).then(data => {
             if (data.totalHits > 0) {
                 const markup = data.hits.map(imageTemplate).join('\n\n');
@@ -42,20 +42,11 @@ function searchImage(evt) {
                     messageLineHeight: '150%',
                     backgroundColor: '#ef4040',
                     position: 'bottomRight',
-                }).catch((error) => {
-                    iziToast.show({
-                        title: 'Error',
-                        titleColor: '#ffffff',
-                        message: `${error}`,
-                        messageColor: '#ffffff',
-                        messageSize: '16px',
-                        backgroundColor: '#ef4040',
-                        iconUrl: errorIcon,
-                        position: 'bottomRight',
-                    });
-                }).finally(spanLoader.style.display = "none");
+                });
             }
-        }); 
+        }).catch(error => console.error(error)) .finally(() => {
+        hideLoader();
+    });
     }
     evt.target.reset(); 
 }
@@ -70,8 +61,7 @@ function getImage(imageName) {
             throw new Error(response.status);
         }
         return response.json();
-    });
-    
+    }); 
 }
 
 function imageTemplate ({webformatURL, largeImageURL, tags, likes, views, comments, downloads}) {
@@ -80,6 +70,14 @@ function imageTemplate ({webformatURL, largeImageURL, tags, likes, views, commen
 }
 
 const gallery = new SimpleLightbox('.gallery a', {
-   captionsData: 'alt',
-   captionDelay: 250,
- });
+    captionsData: 'alt',
+    captionDelay: 250,
+});
+
+function showLoader() {
+    spanLoader.style.display = 'inline-block';
+}
+
+function hideLoader() {
+    spanLoader.style.display = 'none';
+}
